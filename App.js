@@ -1,9 +1,21 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { createStore } from 'redux';
+import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import { PersistGate } from 'redux-persist/integration/react';
 
-import rootReducer from './App/reducer';
+import root from './App/reducer';
+
+const rootReducer = combineReducers({ root });
+
+const persistConfig = {
+  key: 'root',
+  storage,
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const styles = StyleSheet.create({
   container: {
@@ -14,12 +26,15 @@ const styles = StyleSheet.create({
   },
 });
 
-const store = createStore(rootReducer);
+const store = createStore(persistedReducer);
+const persistor = persistStore(store);
 
 export default () => (
   <Provider store={store}>
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-    </View>
+    <PersistGate loading={null} persistor={persistor}>
+      <View style={styles.container}>
+        <Text>Open up App.js to start working on your app!</Text>
+      </View>
+    </PersistGate>
   </Provider>
 );
