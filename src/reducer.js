@@ -1,6 +1,4 @@
-const initialState = {
-  test: 'Hello world',
-};
+const initialState = {};
 
 const root = (state = initialState, action) => {
   switch (action.ref) {
