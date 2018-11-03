@@ -54,7 +54,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn prettier && yarn lint && git diff --exit-code"
+      "pre-commit": "yarn prettier && yarn lint --fix && yarn test && git diff --exit-code"
     }
   },
   "jest": {
