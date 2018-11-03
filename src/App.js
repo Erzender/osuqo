@@ -1,8 +1,6 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import {
-  createStore, combineReducers, compose, applyMiddleware,
-} from 'redux';
+import { createStore, combineReducers, compose, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
