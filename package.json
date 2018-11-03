@@ -9,7 +9,8 @@
     "eject": "expo eject",
     "lint": "node_modules/.bin/eslint --ext .js ./",
     "storybook": "REACT_NATIVE_STORYBOOK=true expo start",
-    "prettier": "prettier --ignore-path ./.gitignore --write src/**/{.,*}.{js,css} *.{md,json} .storybook/**"
+    "prettier": "prettier --ignore-path ./.gitignore --write src/**/{.,*}.{js,css} *.{md,json} .storybook/**",
+    "test": "jest --no-watchman"
   },
   "dependencies": {
     "expo": "^30.0.1",
@@ -22,14 +23,20 @@
     "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.1.2",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/plugin-transform-runtime": "^7.1.0",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-flow": "^7.0.0",
+    "@babel/runtime": "^7.1.2",
     "@storybook/addon-actions": "^4.0.2",
     "@storybook/addon-links": "^4.0.2",
+    "@storybook/addon-storyshots": "^4.0.2",
     "@storybook/addons": "^4.0.2",
     "@storybook/react-native": "^4.0.2",
-    "babel-core": "^6.26.3",
+    "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
-    "babel-jest": "23.6.0",
-    "babel-runtime": "^6.26.0",
+    "babel-jest": "^23.6.0",
     "eslint": "^5.3.0",
     "eslint-config-airbnb": "17.1.0",
     "eslint-config-prettier": "^3.1.0",
@@ -43,11 +50,17 @@
     "prettier": "^1.14.3",
     "prop-types": "^15.6.2",
     "react-dom": "16.3.1",
-    "react-test-renderer": "16.6.0-alpha.8af6728"
+    "react-test-renderer": "^16.6.0"
   },
   "husky": {
     "hooks": {
       "pre-commit": "yarn prettier && yarn lint && git diff --exit-code"
     }
+  },
+  "jest": {
+    "preset": "react-native",
+    "transformIgnorePatterns": [
+      "node_modules/(?!(react-native|react-native-button)/)"
+    ]
   }
 }
