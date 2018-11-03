@@ -8,8 +8,10 @@ import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { PersistGate } from 'redux-persist/integration/react';
 import thunkMiddleware from 'redux-thunk';
+import { Constants } from 'expo';
 
-import root from './App/reducer';
+import root from './src/reducer';
+import QO from './src/games/qo';
 
 const rootReducer = combineReducers({ root });
 
@@ -23,9 +25,12 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#FFFFFF',
+  },
+  statusBar: {
+    minHeight: Constants.statusBarHeight,
+    maxHeight: Constants.statusBarHeight,
+    flex: 1,
   },
 });
 
@@ -35,8 +40,9 @@ const persistor = persistStore(store);
 export default () => (
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
+      <View style={styles.statusBar} />
       <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
+        <QO />
       </View>
     </PersistGate>
   </Provider>
