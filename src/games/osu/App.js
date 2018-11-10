@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { View, Text, BackHandler } from 'react-native';
-import rootActions from '../../../../../duck/actions';
+import rootActions from '../../duck/actions';
 
 const styles = {
   container: {
@@ -27,7 +27,7 @@ class AppCpt extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>quatre oeufs</Text>
+        <Text>osu</Text>
       </View>
     );
   }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, StatusBar } from 'react-native';
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { persistStore, persistReducer } from 'redux-persist';
@@ -8,8 +8,8 @@ import { PersistGate } from 'redux-persist/integration/react';
 import thunkMiddleware from 'redux-thunk';
 import { Constants } from 'expo';
 
-import root from './reducer';
-import QO from './games/qo';
+import root from './duck/reducer';
+import AppSelector from './AppSelector';
 
 const rootReducer = combineReducers({ root });
 
@@ -38,9 +38,9 @@ const persistor = persistStore(store);
 export default () => (
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
-      <View style={styles.statusBar} />
+      <StatusBar hidden />
       <View style={styles.container}>
-        <QO />
+        <AppSelector />
       </View>
     </PersistGate>
   </Provider>
