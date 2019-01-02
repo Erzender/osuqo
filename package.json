@@ -9,14 +9,16 @@
     "eject": "expo eject",
     "lint": "node_modules/.bin/eslint --ext .js ./",
     "storybook": "REACT_NATIVE_STORYBOOK=true expo start",
-    "prettier": "prettier --ignore-path ./.gitignore --write src/**/{.,*}.{js,css} *.{md,json} .storybook/**",
+    "prettier": "prettier --ignore-path ./.gitignore --write 'src/**/{.,*}.{js,css}' *.{md,json} '.storybook/**'",
     "test": "jest --no-watchman"
   },
   "dependencies": {
     "expo": "^30.0.1",
+    "numeral": "^2.0.6",
     "prop-types": "^15.6.2",
     "react": "16.3.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-30.0.0.tar.gz",
+    "react-navigation": "^3.0.9",
     "react-redux": "^5.1.0",
     "redux": "^4.0.1",
     "redux-persist": "^5.10.0",
