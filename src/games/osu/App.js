@@ -1,15 +1,20 @@
 import { connect } from 'react-redux';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { View, Text, BackHandler } from 'react-native';
+import { BackHandler } from 'react-native';
+import { createStackNavigator, createAppContainer } from 'react-navigation';
 import rootActions from '../../duck/actions';
+import Setup from './Setup';
+import Search from './Search';
+import Profile from './Profile';
 
-const styles = {
-  container: {
-    display: 'flex',
-    flex: 1,
-  },
-};
+const App = createAppContainer(
+  createStackNavigator({
+    Search: { screen: Search },
+    Setup: { screen: Setup },
+    Profile: { screen: Profile },
+  })
+);
 
 class AppCpt extends React.Component {
   componentDidMount() {
@@ -25,11 +30,7 @@ class AppCpt extends React.Component {
   }
 
   render() {
-    return (
-      <View style={styles.container}>
-        <Text>osu</Text>
-      </View>
-    );
+    return <App />;
   }
 }
 

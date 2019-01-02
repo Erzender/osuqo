@@ -5,7 +5,8 @@
     "document": true,
     "foo": true,
     "window": true,
-    "navigator": true
+    "navigator": true,
+    "fetch": false
   },
   "rules": {
     "react/jsx-filename-extension": [1, {"extensions": [".js", ".jsx"]}],
@@ -16,7 +17,8 @@
           "storybook/**"
         ]
       }
-    ]
+    ],
+    "react/prop-types": ["error", { "ignore": ["navigation", "dispatch"] }]
   },
   "settings": {
     "import/resolver": {

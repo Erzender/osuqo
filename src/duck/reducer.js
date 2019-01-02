@@ -1,7 +1,9 @@
+import { REHYDRATE } from 'redux-persist';
 import types from './types';
 
 const initialState = {
   game: null,
+  apiKey: '',
 };
 
 const root = (state = initialState, action) => {
@@ -11,6 +13,13 @@ const root = (state = initialState, action) => {
         ...state,
         game: action.game,
       };
+    case types.UPDATE_API_KEY:
+      return {
+        ...state,
+        apiKey: action.apiKey,
+      };
+    case REHYDRATE:
+      return { ...state, apiKey: action.payload.root.apiKey };
     default:
       return state;
   }
