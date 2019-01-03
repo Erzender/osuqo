@@ -10,7 +10,7 @@ import Root from './Root';
 const styles = {
   drawerButton: {
     height: 70,
-    backgroundColor: '#222222',
+    backgroundColor: '#333333',
     justifyContent: 'center',
     borderLeftWidth: 8,
     borderColor: '#552222',
@@ -24,7 +24,7 @@ const styles = {
 };
 
 const Content = ({ back, disconnect }) => (
-  <View style={{ flex: 1, backgroundColor: '#333333', paddingTop: 70 }}>
+  <View style={{ flex: 1, backgroundColor: '#222222', paddingTop: 70 }}>
     <TouchableOpacity style={styles.drawerButton} onPress={back}>
       <Text style={styles.drawerText}>Back</Text>
     </TouchableOpacity>
@@ -41,6 +41,10 @@ Content.propTypes = {
 
 class AppCpt extends React.Component {
   componentDidMount() {
+    const { token, fetchAPI } = this.props;
+    if (token) {
+      fetchAPI(token);
+    }
     this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
       const { goBack, drawerOpen, toggleDrawer } = this.props;
       if (drawerOpen === true) {
@@ -80,10 +84,13 @@ AppCpt.propTypes = {
   toggleDrawer: PropTypes.func.isRequired,
   drawerOpen: PropTypes.bool.isRequired,
   disconnect: PropTypes.func.isRequired,
+  token: PropTypes.string.isRequired,
+  fetchAPI: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
   drawerOpen: state.qo.drawer,
+  token: state.root.qoToken || '',
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -96,6 +103,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(mainActions.disconnect());
     dispatch(mainActions.toggleDrawer(false));
   },
+  fetchAPI: token => dispatch(mainActions.fetchUser(token)),
 });
 
 export default connect(

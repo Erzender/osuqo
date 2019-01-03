@@ -6,6 +6,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Header, Left, Body, Button, Container } from 'native-base';
 import mainActions from '../duck/actions';
 import Login from './Login';
+import Profile from './Profile';
 
 const styles = {
   icon: {
@@ -40,6 +41,7 @@ const Root = ({ openDrawer, loggedIn, loading }) => (
         <ActivityIndicator color="#552222" size={80} />
       </View>
     )}
+    {!loading && loggedIn && <Profile />}
   </Container>
 );
 
