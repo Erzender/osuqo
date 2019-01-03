@@ -9,9 +9,10 @@ import thunkMiddleware from 'redux-thunk';
 import { Constants } from 'expo';
 
 import root from './duck/reducer';
+import qo from './games/qo/views/main/duck/reducer';
 import AppSelector from './AppSelector';
 
-const rootReducer = combineReducers({ root });
+const rootReducer = combineReducers({ root, qo });
 
 const persistConfig = {
   key: 'root',

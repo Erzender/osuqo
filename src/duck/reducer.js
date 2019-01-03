@@ -9,6 +9,8 @@ const initialState = {
 const root = (state = initialState, action) => {
   switch (action.type) {
     case types.SET_GAME:
+      console.log('yay');
+
       return {
         ...state,
         game: action.game,
