@@ -1,20 +1,16 @@
 import React from 'react';
-import { Text } from 'react-native';
 
 import { storiesOf } from '@storybook/react-native';
-import { action } from '@storybook/addon-actions';
-import { linkTo } from '@storybook/addon-links';
 
-import Button from './Button'; // eslint-disable-line import/no-unresolved
-import CenterView from './CenterView';
-import Welcome from './Welcome';
+import CountryRank from '../../src/games/osu/components/CountryRank';
+import ScoreBadge from '../../src/games/osu/components/ScoreBadge';
 
-storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
+storiesOf('CountryRank', module)
+  .add('FR', () => <CountryRank country="FR" />)
+  .add('US', () => <CountryRank country="US" />)
+  .add('DE', () => <CountryRank country="DE" />);
 
-storiesOf('Button', module)
-  .addDecorator(getStory => <CenterView>{getStory()}</CenterView>)
-  .add('with text', () => (
-    <Button onPress={action('clicked-text')}>
-      <Text>Hello Button</Text>
-    </Button>
-  ));
+storiesOf('ScoreBadge', module)
+  .add('SS', () => <ScoreBadge badge="SS" />)
+  .add('S', () => <ScoreBadge badge="S" />)
+  .add('A', () => <ScoreBadge badge="A" />);
