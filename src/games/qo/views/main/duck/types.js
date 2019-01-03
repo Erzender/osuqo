@@ -5,3 +5,7 @@ exports.LOGIN_REQUEST = 'qoMain/LOGIN_REQUEST';
 exports.LOGIN_SUCCESS = 'qoMain/LOGIN_SUCCESS';
 exports.LOGIN_FAIL = 'qoMain/LOGIN_FAIL';
 exports.DISCONNECT = 'qoMain/DISCONNECT';
+exports.SIGNIN = 'qoMain/SIGNIN';
+exports.SIGNIN_REQUEST = 'qoMain/SIGNIN_REQUEST';
+exports.SIGNIN_SUCCESS = 'qoMain/SIGNIN_SUCCESS';
+exports.SIGNIN_FAIL = 'qoMain/SIGNIN_FAIL';

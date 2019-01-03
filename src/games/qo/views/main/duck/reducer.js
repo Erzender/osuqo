@@ -5,6 +5,7 @@ const initialState = {
   fieldName: '',
   fieldPassword: '',
   loading: false,
+  message: '',
 };
 
 const qo = (state = initialState, action) => {
@@ -34,6 +35,24 @@ const qo = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+        message: 'Could not log in.',
+      };
+    case types.SIGNIN_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        message: 'Account created !',
+      };
+    case types.SIGNIN_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case types.SIGNIN_FAIL:
+      return {
+        ...state,
+        loading: false,
+        message: 'Could not create account.',
       };
     default:
       return state;

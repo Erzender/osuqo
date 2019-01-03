@@ -1,35 +1,52 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { KeyboardAvoidingView, TextInput, Text, Button } from 'react-native';
+import { KeyboardAvoidingView, TextInput, Text, Button, View } from 'react-native';
 import PropTypes from 'prop-types';
 import mainActions from '../duck/actions';
 
 const styles = {
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    padding: 20,
   },
   input: {
-    width: 300,
     height: 50,
   },
 };
 
-const Login = ({ login, name, password, updateFieldName, updateFieldPassword }) => {
+const Login = ({
+  login,
+  name,
+  password,
+  updateFieldName,
+  updateFieldPassword,
+  createAccount,
+  message,
+}) => {
   const loginButton = () => login(name, password);
+  const createButton = () => createAccount(name, password);
   return (
     <KeyboardAvoidingView behavior="padding" enabled style={styles.container}>
-      <Text>Character Name</Text>
-      <TextInput style={styles.input} value={name} onChangeText={updateFieldName} />
-      <Text>Password</Text>
+      <TextInput
+        style={styles.input}
+        value={name}
+        onChangeText={updateFieldName}
+        placeholder="Character name"
+      />
       <TextInput
         secureTextEntry
         style={styles.input}
         value={password}
         onChangeText={updateFieldPassword}
+        placeholder="Password"
       />
-      <Button title="Log in" onPress={loginButton} />
+      <View style={{ marginTop: 10 }}>
+        <Button color="#552222" title="Log in" onPress={loginButton} />
+      </View>
+      <View style={{ marginTop: 10 }}>
+        <Button color="#552222" title="Create account" onPress={createButton} style={{ flex: 1 }} />
+      </View>
+      <Text style={{ alignSelf: 'center' }}>{message}</Text>
     </KeyboardAvoidingView>
   );
 };
@@ -40,17 +57,21 @@ Login.propTypes = {
   password: PropTypes.string.isRequired,
   updateFieldName: PropTypes.func.isRequired,
   updateFieldPassword: PropTypes.func.isRequired,
+  createAccount: PropTypes.func.isRequired,
+  message: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = state => ({
   name: state.qo.fieldName || '',
   password: state.qo.fieldPassword || '',
+  message: state.qo.message || '',
 });
 
 const mapDispatchToProps = dispatch => ({
   login: (name, password) => dispatch(mainActions.login(name, password)),
   updateFieldName: name => dispatch(mainActions.updateField('name', name)),
   updateFieldPassword: pw => dispatch(mainActions.updateField('password', pw)),
+  createAccount: (name, password) => dispatch(mainActions.signin(name, password)),
 });
 
 export default connect(

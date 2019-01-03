@@ -10,7 +10,7 @@ import Root from './Root';
 const styles = {
   drawerButton: {
     height: 70,
-    backgroundColor: '#EEEEEE',
+    backgroundColor: '#222222',
     justifyContent: 'center',
     borderLeftWidth: 8,
     borderColor: '#552222',
@@ -19,11 +19,12 @@ const styles = {
   },
   drawerText: {
     fontSize: 20,
+    color: 'white',
   },
 };
 
 const Content = ({ back, disconnect }) => (
-  <View style={{ flex: 1, backgroundColor: 'white' }}>
+  <View style={{ flex: 1, backgroundColor: '#333333', paddingTop: 70 }}>
     <TouchableOpacity style={styles.drawerButton} onPress={back}>
       <Text style={styles.drawerText}>Back</Text>
     </TouchableOpacity>

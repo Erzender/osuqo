@@ -26,6 +26,19 @@ const loginFail = err => ({
   err,
 });
 
+const signinRequest = () => ({
+  type: types.SIGNIN_REQUEST,
+});
+
+const signinSuccess = () => ({
+  type: types.SIGNIN_SUCCESS,
+});
+
+const signinFail = err => ({
+  type: types.SIGNIN_FAIL,
+  err,
+});
+
 const login = (name, password) => async dispatch => {
   dispatch(loginRequest('password', ''));
   try {
@@ -47,6 +60,25 @@ const login = (name, password) => async dispatch => {
   }
 };
 
+const signin = (name, password) => async dispatch => {
+  dispatch(signinRequest('password', ''));
+  try {
+    let ret = await fetch(`${config.server}/api/account`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, password }),
+    });
+    if (ret.status === 200) {
+      ret = await ret.json();
+
+      return dispatch(signinSuccess());
+    }
+    return dispatch(signinFail('unknown'));
+  } catch (e) {
+    return dispatch(signinFail('unknown'));
+  }
+};
+
 const disconnect = () => ({
   type: types.DISCONNECT,
 });
@@ -57,4 +89,8 @@ exports.login = login;
 exports.loginRequest = loginRequest;
 exports.loginSuccess = loginSuccess;
 exports.loginFail = loginFail;
+exports.signin = signin;
+exports.signinRequest = signinRequest;
+exports.signinSuccess = signinSuccess;
+exports.signinFail = signinFail;
 exports.disconnect = disconnect;
