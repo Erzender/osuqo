@@ -1,1 +1,2 @@
 exports.TOGGLE_DRAWER = 'qoMain/TOGGLE_DRAWER';
+exports.UPDATE_FIELD = 'qoMain/UPDATE_FIELD';

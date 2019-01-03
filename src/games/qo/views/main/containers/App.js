@@ -1,27 +1,38 @@
 import { connect } from 'react-redux';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { BackHandler, Text, View } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { Container, Header, Left, Body, Drawer, Button } from 'native-base';
+import { BackHandler, Text, View, TouchableOpacity } from 'react-native';
+import { Drawer } from 'native-base';
 import rootActions from '../../../../../duck/actions';
 import mainActions from '../duck/actions';
+import Root from './Root';
 
 const styles = {
-  icon: {
-    fontSize: 25,
-    color: 'white',
+  drawerButton: {
+    height: 70,
+    backgroundColor: '#EEEEEE',
+    justifyContent: 'center',
+    borderLeftWidth: 8,
+    borderColor: '#552222',
+    marginBottom: 1,
+    paddingLeft: 20,
   },
-  header: {
-    backgroundColor: '#552222',
+  drawerText: {
+    fontSize: 20,
   },
 };
 
-const Content = () => (
+const Content = ({ back }) => (
   <View style={{ flex: 1, backgroundColor: 'white' }}>
-    <Text>menu</Text>
+    <TouchableOpacity style={styles.drawerButton} onPress={back}>
+      <Text style={styles.drawerText}>Back</Text>
+    </TouchableOpacity>
   </View>
 );
+
+Content.propTypes = {
+  back: PropTypes.func.isRequired,
+};
 
 class AppCpt extends React.Component {
   componentDidMount() {
@@ -41,32 +52,20 @@ class AppCpt extends React.Component {
   }
 
   render() {
-    const { toggleDrawer, drawerOpen } = this.props;
+    const { goBack, toggleDrawer, drawerOpen } = this.props;
     const closeDrawer = () => toggleDrawer(false);
-    const openDrawer = () => toggleDrawer(true);
     return (
-      <Container>
-        <Drawer
-          onCloseStart={closeDrawer}
-          panThreshold={0.25}
-          open={drawerOpen}
-          ref={ref => {
-            this.drawer = ref;
-          }}
-          content={<Content />}
-        >
-          <Header style={styles.header}>
-            <Left>
-              <Button transparent onPress={openDrawer}>
-                <Ionicons name="ios-menu" style={styles.icon} />
-              </Button>
-            </Left>
-            <Body>
-              <Text style={styles.icon}>Quatre Oeufs</Text>
-            </Body>
-          </Header>
-        </Drawer>
-      </Container>
+      <Drawer
+        onCloseStart={closeDrawer}
+        panThreshold={0.25}
+        open={drawerOpen}
+        ref={ref => {
+          this.drawer = ref;
+        }}
+        content={<Content back={goBack} />}
+      >
+        <Root />
+      </Drawer>
     );
   }
 }
