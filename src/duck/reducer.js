@@ -1,9 +1,10 @@
-import { REHYDRATE } from 'redux-persist';
 import types from './types';
+import qoTypes from '../games/qo/views/main/duck/types';
 
 const initialState = {
   game: null,
   apiKey: '',
+  qoToken: null,
 };
 
 const root = (state = initialState, action) => {
@@ -18,8 +19,16 @@ const root = (state = initialState, action) => {
         ...state,
         apiKey: action.apiKey,
       };
-    case REHYDRATE:
-      return { ...state, apiKey: action.payload.root.apiKey };
+    case qoTypes.LOGIN_SUCCESS:
+      return {
+        ...state,
+        qoToken: action.token,
+      };
+    case qoTypes.DISCONNECT:
+      return {
+        ...state,
+        qoToken: null,
+      };
     default:
       return state;
   }

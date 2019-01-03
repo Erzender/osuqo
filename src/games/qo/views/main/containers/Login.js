@@ -16,20 +16,23 @@ const styles = {
   },
 };
 
-const Login = ({ login, name, password, updateFieldName, updateFieldPassword }) => (
-  <KeyboardAvoidingView behavior="padding" enabled style={styles.container}>
-    <Text>Character Name</Text>
-    <TextInput style={styles.input} value={name} onChangeText={updateFieldName} />
-    <Text>Password</Text>
-    <TextInput
-      secureTextEntry
-      style={styles.input}
-      value={password}
-      onChangeText={updateFieldPassword}
-    />
-    <Button title="Log in" onPress={login} />
-  </KeyboardAvoidingView>
-);
+const Login = ({ login, name, password, updateFieldName, updateFieldPassword }) => {
+  const loginButton = () => login(name, password);
+  return (
+    <KeyboardAvoidingView behavior="padding" enabled style={styles.container}>
+      <Text>Character Name</Text>
+      <TextInput style={styles.input} value={name} onChangeText={updateFieldName} />
+      <Text>Password</Text>
+      <TextInput
+        secureTextEntry
+        style={styles.input}
+        value={password}
+        onChangeText={updateFieldPassword}
+      />
+      <Button title="Log in" onPress={loginButton} />
+    </KeyboardAvoidingView>
+  );
+};
 
 Login.propTypes = {
   login: PropTypes.func.isRequired,
@@ -45,7 +48,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  login: () => console.log('login'),
+  login: (name, password) => dispatch(mainActions.login(name, password)),
   updateFieldName: name => dispatch(mainActions.updateField('name', name)),
   updateFieldPassword: pw => dispatch(mainActions.updateField('password', pw)),
 });

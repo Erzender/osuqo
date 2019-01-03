@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Text } from 'react-native';
+import { Text, ActivityIndicator, View } from 'react-native';
 import PropTypes from 'prop-types';
 import { Ionicons } from '@expo/vector-icons';
 import { Header, Left, Body, Button, Container } from 'native-base';
@@ -15,9 +15,14 @@ const styles = {
   header: {
     backgroundColor: '#552222',
   },
+  loading: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 };
 
-const Root = ({ openDrawer, loggedIn }) => (
+const Root = ({ openDrawer, loggedIn, loading }) => (
   <Container>
     <Header style={styles.header}>
       <Left>
@@ -29,17 +34,24 @@ const Root = ({ openDrawer, loggedIn }) => (
         <Text style={styles.icon}>Quatre Oeufs</Text>
       </Body>
     </Header>
-    {!loggedIn && <Login />}
+    {!loggedIn && !loading && <Login />}
+    {loading && (
+      <View style={styles.loading}>
+        <ActivityIndicator color="#552222" size={80} />
+      </View>
+    )}
   </Container>
 );
 
 Root.propTypes = {
   openDrawer: PropTypes.func.isRequired,
   loggedIn: PropTypes.bool.isRequired,
+  loading: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
-  loggedIn: state.qo.token || false,
+  loggedIn: !!state.root.qoToken,
+  loading: state.qo.loading === undefined ? false : state.qo.loading,
 });
 
 const mapDispatchToProps = dispatch => ({

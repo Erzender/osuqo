@@ -22,16 +22,20 @@ const styles = {
   },
 };
 
-const Content = ({ back }) => (
+const Content = ({ back, disconnect }) => (
   <View style={{ flex: 1, backgroundColor: 'white' }}>
     <TouchableOpacity style={styles.drawerButton} onPress={back}>
       <Text style={styles.drawerText}>Back</Text>
+    </TouchableOpacity>
+    <TouchableOpacity style={styles.drawerButton} onPress={disconnect}>
+      <Text style={styles.drawerText}>Disconnect</Text>
     </TouchableOpacity>
   </View>
 );
 
 Content.propTypes = {
   back: PropTypes.func.isRequired,
+  disconnect: PropTypes.func.isRequired,
 };
 
 class AppCpt extends React.Component {
@@ -52,7 +56,7 @@ class AppCpt extends React.Component {
   }
 
   render() {
-    const { goBack, toggleDrawer, drawerOpen } = this.props;
+    const { goBack, toggleDrawer, drawerOpen, disconnect } = this.props;
     const closeDrawer = () => toggleDrawer(false);
     return (
       <Drawer
@@ -62,7 +66,7 @@ class AppCpt extends React.Component {
         ref={ref => {
           this.drawer = ref;
         }}
-        content={<Content back={goBack} />}
+        content={<Content back={goBack} disconnect={disconnect} />}
       >
         <Root />
       </Drawer>
@@ -74,6 +78,7 @@ AppCpt.propTypes = {
   goBack: PropTypes.func.isRequired,
   toggleDrawer: PropTypes.func.isRequired,
   drawerOpen: PropTypes.bool.isRequired,
+  disconnect: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -81,8 +86,15 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  goBack: () => dispatch(rootActions.setGame(null)),
+  goBack: () => {
+    dispatch(rootActions.setGame(null));
+    dispatch(mainActions.toggleDrawer(false));
+  },
   toggleDrawer: value => dispatch(mainActions.toggleDrawer(value)),
+  disconnect: () => {
+    dispatch(mainActions.disconnect());
+    dispatch(mainActions.toggleDrawer(false));
+  },
 });
 
 export default connect(
