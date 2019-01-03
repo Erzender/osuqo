@@ -24,7 +24,7 @@ class Setup extends React.Component {
   };
 
   state = {
-    apiKey: this.props.apiKey, // eslint-disable-line react/destructuring-assignment
+    apiKey: this.props.apiKey || '', // eslint-disable-line react/destructuring-assignment
   };
 
   save = () => {
@@ -56,7 +56,11 @@ class Setup extends React.Component {
 }
 
 Setup.propTypes = {
-  apiKey: PropTypes.string.isRequired,
+  apiKey: PropTypes.string,
+};
+
+Setup.defaultProps = {
+  apiKey: '',
 };
 
 export default connect(mapStateToProps)(Setup);
