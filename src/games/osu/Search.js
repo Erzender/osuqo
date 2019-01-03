@@ -82,7 +82,11 @@ class Search extends React.Component {
 }
 
 Search.propTypes = {
-  apiKey: PropTypes.string.isRequired,
+  apiKey: PropTypes.string,
+};
+
+Search.defaultProps = {
+  apiKey: '',
 };
 
 export default connect(mapStateToProps)(Search);
