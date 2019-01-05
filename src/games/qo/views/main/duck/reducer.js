@@ -10,6 +10,7 @@ const initialState = {
   rank: 'player',
   picture:
     'https://www.brick-a-brack.com/users/image/800/600/?1546251884https://www.brick-a-brack.com/users/image/800/600/?1546251884',
+  notificationId: null,
 };
 
 const qo = (state = initialState, action) => {
@@ -79,6 +80,13 @@ const qo = (state = initialState, action) => {
         name: '',
         picture: '',
         rank: '',
+        notificationId: null,
+        loading: false,
+      };
+    case types.NOTIF_SCHEDULE:
+      return {
+        ...state,
+        notificationId: action.id,
       };
     default:
       return state;

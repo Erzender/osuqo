@@ -1,3 +1,4 @@
+import { Notifications } from 'expo';
 import types from './types';
 import config from '../../../config.json';
 
@@ -10,6 +11,11 @@ const updateField = (field, value) => ({
   type: types.UPDATE_FIELD,
   field,
   value,
+});
+
+const scheduledNotification = notif => ({
+  type: types.NOTIF_SCHEDULE,
+  id: notif,
 });
 
 const loginRequest = () => ({
@@ -78,7 +84,7 @@ const fetchUser = token => async dispatch => {
   }
 };
 
-const login = (name, password) => async dispatch => {
+const login = (name, password, notifSetup) => async dispatch => {
   dispatch(loginRequest('password', ''));
   try {
     let ret = await fetch(`${config.server}/api/authentication`, {
@@ -89,6 +95,19 @@ const login = (name, password) => async dispatch => {
     if (ret.status === 200) {
       ret = await ret.json();
       dispatch(loginSuccess(ret.token));
+      if (notifSetup) {
+        const notif = await Notifications.scheduleLocalNotificationAsync(
+          {
+            title: 'Your Quatre Oeufs profile',
+            body: "Your profile hasn't change, but you can still look at it !",
+          },
+          {
+            time: new Date().getTime() + 10000,
+            repeat: 'hour',
+          }
+        );
+        dispatch(scheduledNotification(notif));
+      }
       return dispatch(fetchUser(ret.token));
     }
     if (ret.status === 422 || ret.status === 403) {
@@ -96,6 +115,7 @@ const login = (name, password) => async dispatch => {
     }
     return dispatch(loginFail('unknown'));
   } catch (e) {
+    console.log(e);
     return dispatch(loginFail('unknown'));
   }
 };
@@ -123,6 +143,15 @@ const disconnect = () => ({
   type: types.DISCONNECT,
 });
 
+const logout = notificationId => async dispatch => {
+  try {
+    Notifications.cancelScheduledNotificationAsync(notificationId);
+  } catch (e) {
+    return dispatch(disconnect());
+  }
+  return dispatch(disconnect());
+};
+
 exports.toggleDrawer = toggleDrawer;
 exports.updateField = updateField;
 exports.login = login;
@@ -138,3 +167,5 @@ exports.fetchUserSuccess = fetchUserSuccess;
 exports.fetchUserFail = fetchUserFail;
 exports.disconnect = disconnect;
 exports.fetchUser = fetchUser;
+exports.logout = logout;
+exports.scheduledNotification = scheduledNotification;

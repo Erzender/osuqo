@@ -23,12 +23,12 @@ const styles = {
   },
 };
 
-const Content = ({ back, disconnect }) => (
+const Content = ({ back, logout }) => (
   <View style={{ flex: 1, backgroundColor: '#222222', paddingTop: 70 }}>
     <TouchableOpacity style={styles.drawerButton} onPress={back}>
       <Text style={styles.drawerText}>Back</Text>
     </TouchableOpacity>
-    <TouchableOpacity style={styles.drawerButton} onPress={disconnect}>
+    <TouchableOpacity style={styles.drawerButton} onPress={logout}>
       <Text style={styles.drawerText}>Disconnect</Text>
     </TouchableOpacity>
   </View>
@@ -36,7 +36,7 @@ const Content = ({ back, disconnect }) => (
 
 Content.propTypes = {
   back: PropTypes.func.isRequired,
-  disconnect: PropTypes.func.isRequired,
+  logout: PropTypes.func.isRequired,
 };
 
 class AppCpt extends React.Component {
@@ -61,8 +61,9 @@ class AppCpt extends React.Component {
   }
 
   render() {
-    const { goBack, toggleDrawer, drawerOpen, disconnect } = this.props;
+    const { goBack, toggleDrawer, drawerOpen, disconnect, notifId } = this.props;
     const closeDrawer = () => toggleDrawer(false);
+    const logout = () => disconnect(notifId);
     return (
       <Drawer
         onCloseStart={closeDrawer}
@@ -71,7 +72,7 @@ class AppCpt extends React.Component {
         ref={ref => {
           this.drawer = ref;
         }}
-        content={<Content back={goBack} disconnect={disconnect} />}
+        content={<Content back={goBack} logout={logout} />}
       >
         <Root />
       </Drawer>
@@ -86,11 +87,13 @@ AppCpt.propTypes = {
   disconnect: PropTypes.func.isRequired,
   token: PropTypes.string.isRequired,
   fetchAPI: PropTypes.func.isRequired,
+  notifId: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = state => ({
   drawerOpen: state.qo.drawer,
   token: state.root.qoToken || '',
+  notifId: state.qo.notificationId || 0,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -99,8 +102,8 @@ const mapDispatchToProps = dispatch => ({
     dispatch(mainActions.toggleDrawer(false));
   },
   toggleDrawer: value => dispatch(mainActions.toggleDrawer(value)),
-  disconnect: () => {
-    dispatch(mainActions.disconnect());
+  disconnect: id => {
+    dispatch(mainActions.logout(id));
     dispatch(mainActions.toggleDrawer(false));
   },
   fetchAPI: token => dispatch(mainActions.fetchUser(token)),

@@ -16,6 +16,7 @@ const styles = {
 
 const Login = ({
   login,
+  notifSetup,
   name,
   password,
   updateFieldName,
@@ -23,7 +24,7 @@ const Login = ({
   createAccount,
   message,
 }) => {
-  const loginButton = () => login(name, password);
+  const loginButton = () => login(name, password, notifSetup);
   const createButton = () => createAccount(name, password);
   return (
     <KeyboardAvoidingView behavior="padding" enabled style={styles.container}>
@@ -53,6 +54,7 @@ const Login = ({
 
 Login.propTypes = {
   login: PropTypes.func.isRequired,
+  notifSetup: PropTypes.bool.isRequired,
   name: PropTypes.string.isRequired,
   password: PropTypes.string.isRequired,
   updateFieldName: PropTypes.func.isRequired,
@@ -62,13 +64,14 @@ Login.propTypes = {
 };
 
 const mapStateToProps = state => ({
+  notifSetup: !state.qo.notificationId,
   name: state.qo.fieldName || '',
   password: state.qo.fieldPassword || '',
   message: state.qo.message || '',
 });
 
 const mapDispatchToProps = dispatch => ({
-  login: (name, password) => dispatch(mainActions.login(name, password)),
+  login: (name, password, notifSetup) => dispatch(mainActions.login(name, password, notifSetup)),
   updateFieldName: name => dispatch(mainActions.updateField('name', name)),
   updateFieldPassword: pw => dispatch(mainActions.updateField('password', pw)),
   createAccount: (name, password) => dispatch(mainActions.signin(name, password)),
