@@ -3,6 +3,7 @@
 ## Prerequisites
 
 - A terminal with node installed
+- expo cli installed (`yarn global add expo-cli`)
 
 ## Build
 
